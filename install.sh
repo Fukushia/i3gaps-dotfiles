@@ -177,8 +177,12 @@ files=(
 )
 
 for i in "${files[@]}"; {
+    rm ~/$i
 	ln -sv $SCRIPTPATH/$i ~
 }
+
+mkdir ~/.config
+mkdir ~/.config/i3
 
 ## i3-wm
 i3_dirbase=$SCRIPTPATH/i3-wm
@@ -190,7 +194,8 @@ i3_files=(
 )
 
 for i in "${i3_files[@]}"; {
-	ln -sv "$i3_dirbase/$i" ~/.config/i3
+    rm ~/.config/i3/$i
+	ln -sv "$i3_dirbase/$i" ~/.config/i3/
 }
 
 ## lightdm
@@ -201,6 +206,7 @@ lightdm=(
 )
 
 for i in "${lightdm[@]}"; {
+    rm /etc/lightdm/$i
 	ln -sv "$lightdm_dirbase/$i" /etc/lightdm/
 }
 
