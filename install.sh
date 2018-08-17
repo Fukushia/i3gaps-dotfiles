@@ -15,7 +15,7 @@ install_pac() {
 
 install_opt() {
 	for i in "$@"; {
-		pacman --asdeps "$i"
+		pacman --asdeps -S "$i"
 	}
 }
 
