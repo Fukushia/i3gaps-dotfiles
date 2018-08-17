@@ -63,7 +63,7 @@ basePrograms=(
 "xvidcore"
 )
 
-install_pac ${basePrograms[@]}
+install_pac "${basePrograms[@]}"
 
 amdVideo=(
 "xf86-video-ati"
@@ -72,7 +72,7 @@ amdVideo=(
 )
 
 ## CHANGE IT IF HAVE ANOTHER GPU!!!
-install_pac ${amdVideo[@]}
+install_pac "${amdVideo[@]}"
 
 programs=(
 "rofi" # Window switcher, run dialog, ssh-launcher and dmenu
@@ -93,7 +93,7 @@ programs=(
 "git"
 )
 
-install_pac ${programs[@]}
+install_pac "${programs[@]}"
 
 deps_programs=(
 # i3-wm
@@ -116,7 +116,7 @@ deps_programs=(
 "xsel"
 )
 
-install_opt ${deps_programs[@]}
+install_opt "${deps_programs[@]}" 
 
 others=(
 "xf86-input-synaptcs" # touchpad driver
@@ -138,7 +138,7 @@ others=(
 "linux-lts-headers" # optional
 )
 
-#install_pac ${others[@]}
+#install_pac "${others[@]}"
 
 commands_others=(
 "systemctl enable bluetooth && systemctl start bluetooth"
@@ -147,7 +147,7 @@ commands_others=(
 "mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
 )
 
-#exec_command ${commands_others[@]}
+#exec_command "${commands_others[@]}"
 
 aur=(
 "polybar"
@@ -157,14 +157,15 @@ aur=(
 "shantz-xwinwrap-bzr"
 )
 
-install_aur ${aur[@]}
+install_aur "${aur[@]}"
 
 commands_aur=(
-"systemctl enable preload && systemctl start preload"
+"systemctl enable preload"
+"systemctl start preload"
 "fc-cache -vf"
 )
 
-exec_command ${commands_aur[@]}
+exec_command "${commands_aur[@]}"
 
 files=(
 ".alias"
@@ -175,7 +176,7 @@ files=(
 ".bashrc"
 )
 
-for i in ${files[@]}; {
+for i in "${files[@]}"; {
 	ln -sv $SCRIPTPATH/$i ~
 }
 
@@ -188,7 +189,7 @@ i3_files=(
 "flameshot.sh"
 )
 
-for i in ${i3_files[@]}; {
+for i in "${i3_files[@]}"; {
 	ln -sv "$i3_dirbase/$i" ~/.config/i3
 }
 
@@ -199,7 +200,7 @@ lightdm=(
 "lightdm-gtk-greeter.conf"
 )
 
-for i in ${lightdm[@]}; {
+for i in "${lightdm[@]}"; {
 	ln -sv "$lightdm_dirbase/$i" /etc/lightdm/
 }
 
@@ -210,4 +211,4 @@ cd ~/.config
 git clone https://github.com/Fukushia/neoVim-configs.git
 cd neoVim-configs
 ./install.sh
-cd $SCRIPTPATH 
+cd "$SCRIPTPATH"
