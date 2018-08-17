@@ -9,13 +9,13 @@ exec_command() {
 
 install_pac() {
 	for i in "$@"; {
-		pacman -S "$i"
+		pacman --noconfirm -S "$i"
 	}
 }
 
 install_opt() {
 	for i in "$@"; {
-		pacman --asdeps -S "$i"
+		pacman --noconfirm --asdeps -S "$i"
 	}
 }
 
