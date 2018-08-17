@@ -30,8 +30,8 @@ install_aur() {
 
 pre_commands=(
 # Add [multilib] to pacman
-"echo \"[multilib]\" > /etc/pacman.conf"
-"echo \"Include = /etc/pacman.d/mirrorlist\" > /etc/pacman.conf"
+"eval echo '[multilib]' > /etc/pacman.conf"
+"eval echo 'Include = /etc/pacman.d/mirrorlist' > /etc/pacman.conf"
 "pacman -Syu"
 )
 
