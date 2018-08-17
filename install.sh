@@ -28,14 +28,10 @@ install_aur() {
 	}
 }
 
-pre_commands=(
 # Add [multilib] to pacman
-"eval echo '[multilib]' > /etc/pacman.conf"
-"eval echo 'Include = /etc/pacman.d/mirrorlist' > /etc/pacman.conf"
-"pacman -Syu"
-)
-
-exec_command ${pre_commands[@]}
+echo '[multilib]' >> /etc/pacman.conf
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+pacman -Syu
 
 basePrograms=(
 "xorg-server"
