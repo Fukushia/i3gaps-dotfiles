@@ -1,15 +1,6 @@
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-###########
-# PRE-REQ #
-###########
-
-if [[ `whoami` != "root" ]]; then
-  echo "Please start these script as root"
-  exit 1
-fi
-
 #############
 # FUNCTIONS #
 #############
@@ -36,7 +27,7 @@ install_aur() {
 	for i in "$@"; {
 		git clone "https://aur.archlinux.org/$i.git"
 		cd "$i"
-		makepkg -si
+		makepkg -si --noconfirm
 		cd "$SCRIPTPATH"
 	}
 }
@@ -44,11 +35,6 @@ install_aur() {
 #######################
 # INSTALLING PROGRAMS #
 #######################
-
-# Add [multilib] to pacman
-echo '[multilib]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
-pacman -Syu
 
 basePrograms=(
 "xorg-server"
@@ -80,16 +66,11 @@ basePrograms=(
 "xvidcore"
 )
 
-install_pac "${basePrograms[@]}"
-
 amdVideo=(
 "xf86-video-ati"
 "lib32-mesa-dri"
 "lib32-mesa-libgl"
 )
-
-## CHANGE IT IF HAVE ANOTHER GPU!!!
-install_pac "${amdVideo[@]}"
 
 programs=(
 "rofi" # Window switcher, run dialog, ssh-launcher and dmenu
@@ -109,8 +90,6 @@ programs=(
 "openssh"
 "git"
 )
-
-install_pac "${programs[@]}"
 
 deps_programs=(
 # i3-wm
@@ -133,8 +112,6 @@ deps_programs=(
 "xsel"
 )
 
-install_opt "${deps_programs[@]}" 
-
 others=(
 "xf86-input-synaptcs" # touchpad driver
 "network-manager-applet" # graphy network manager
@@ -155,16 +132,12 @@ others=(
 "linux-lts-headers" # optional
 )
 
-#install_pac "${others[@]}"
-
 commands_others=(
 "systemctl enable bluetooth && systemctl start bluetooth"
 "systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
 "systemctl enable ufw.service &&systemctl start ufw.service"
 "mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
 )
-
-#exec_command "${commands_others[@]}"
 
 aur=(
 "polybar"
@@ -174,23 +147,38 @@ aur=(
 "shantz-xwinwrap-bzr"
 )
 
-install_aur "${aur[@]}"
-
 commands_aur=(
 "systemctl enable preload"
 "systemctl start preload"
 "fc-cache -vf"
 )
 
+# EXECS #
+
+## EXEC AS ROOT
+sudo -E bash << EOF
+echo '[multilib]' >> /etc/pacman.conf
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+pacman -Syu
+
+install_pac "${basePrograms[@]}"
+install_pac "${amdVideo[@]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
+install_pac "${programs[@]}"
+install_opt "${deps_programs[@]}" 
+#install_pac "${others[@]}"
+#exec_command "${commands_others[@]}"
+EOF
+
+install_aur "${aur[@]}"
+
+## EXEC AS ROOT
+sudo -E bash << EOF
 exec_command "${commands_aur[@]}"
+EOF
 
 #######################
 # FILES CONFIGURATION #
 #######################
-
-## DOTFILES
-
-mkdir ~/.dotfiles
 
 dotfiles=(
 "alias"
@@ -199,23 +187,10 @@ dotfiles=(
 "bashrc"
 )
 
-for i in"${dotfiles[@]}"; {
-  ln -fsv "$SCRIPTPATH/dotfiles/$1" "~/.dotfiles/$1"
-}
-
-files=(
+home_files=(
 "Xresources"
 "bash_profile"
 )
-
-for i in "${files[@]}"; {
-	ln -fsv "$SCRIPTPATH/dotfiles/$i" "~/.$1"
-}
-
-## i3 configs
-
-mkdir ~/.config
-mkdir ~/.config/i3
 
 i3_files=(
 "config"
@@ -223,27 +198,46 @@ i3_files=(
 "flameshot.sh"
 )
 
-for i in "${i3_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/i3/$i" "~/.config/i3"
-}
-
-## lightdm
-
 lightdm=(
 "lightdm.conf"
 "lightdm-gtk-greeter.conf"
 )
 
+# EXECS #
+
+## EXEC AS ROOT
+sudo -E bash << EOF
+## dotfiles
+mkdir ~/.dotfiles
+for i in"${dotfiles[@]}"; {
+  ln -fsv "$SCRIPTPATH/dotfiles/$1" "~/.dotfiles/$1"
+}
+for i in "${home_files[@]}"; {
+	ln -fsv "$SCRIPTPATH/dotfiles/$i" "~/.$1"
+}
+
+## i3 configs
+mkdir ~/.config
+mkdir ~/.config/i3
+for i in "${i3_files[@]}"; {
+	ln -fsv "$SCRIPTPATH/i3/$i" "~/.config/i3/$1"
+}
+
+## lightdm
 for i in "${lightdm[@]}"; {
 	ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
 }
+EOF
 
-## OTHERS
+### OTHERS
 
 ## my nvim
 cd ~/.config
 git clone https://github.com/Fukushia/neoVim-configs.git
 mv neoVim-configs nvim
 cd nvim
+
+sudo -E << EOF
 ./install.sh
 cd "$SCRIPTPATH"
+EOF
