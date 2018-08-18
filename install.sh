@@ -1,6 +1,19 @@
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+###########
+# PRE-REQ #
+###########
+
+if [[ `whoami` != "root" ]]; then
+  echo "Please start these script as root"
+  exit 1
+fi
+
+#############
+# FUNCTIONS #
+#############
+
 exec_command() {
 	for i in "$@"; {
 		"$i"
@@ -27,6 +40,10 @@ install_aur() {
 		cd "$SCRIPTPATH"
 	}
 }
+
+#######################
+# INSTALLING PROGRAMS #
+#######################
 
 # Add [multilib] to pacman
 echo '[multilib]' >> /etc/pacman.conf
@@ -167,25 +184,38 @@ commands_aur=(
 
 exec_command "${commands_aur[@]}"
 
+#######################
+# FILES CONFIGURATION #
+#######################
+
+## DOTFILES
+
+mkdir ~/.dotfiles
+
+dotfiles=(
+"alias"
+"functions"
+"inputrc"
+"bashrc"
+)
+
+for i in"${dotfiles[@]}"; {
+  ln -fsv "$SCRIPTPATH/dotfiles/$1" "~/.dotfiles/$1"
+}
+
 files=(
-".alias"
-".functions"
-".inputrc"
-".Xresources"
-".bash_profile"
-".bashrc"
+"Xresources"
+"bash_profile"
 )
 
 for i in "${files[@]}"; {
-    rm ~/$i
-	ln -sv $SCRIPTPATH/$i ~
+	ln -fsv "$SCRIPTPATH/dotfiles/$i" "~/.$1"
 }
+
+## i3 configs
 
 mkdir ~/.config
 mkdir ~/.config/i3
-
-## i3-wm
-i3_dirbase=$SCRIPTPATH/i3-wm
 
 i3_files=(
 "config"
@@ -194,20 +224,18 @@ i3_files=(
 )
 
 for i in "${i3_files[@]}"; {
-    rm ~/.config/i3/$i
-	ln -sv "$i3_dirbase/$i" ~/.config/i3/
+	ln -fsv "$SCRIPTPATH/i3/$i" "~/.config/i3"
 }
 
 ## lightdm
-lightdm_dirbase=$SCRIPTPATH/lightdm
+
 lightdm=(
 "lightdm.conf"
 "lightdm-gtk-greeter.conf"
 )
 
 for i in "${lightdm[@]}"; {
-    rm /etc/lightdm/$i
-	ln -sv "$lightdm_dirbase/$i" /etc/lightdm/
+	ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
 }
 
 ## OTHERS
@@ -215,6 +243,7 @@ for i in "${lightdm[@]}"; {
 ## my nvim
 cd ~/.config
 git clone https://github.com/Fukushia/neoVim-configs.git
-cd neoVim-configs
+mv neoVim-configs nvim
+cd nvim
 ./install.sh
 cd "$SCRIPTPATH"
