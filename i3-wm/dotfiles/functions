@@ -1,0 +1,13 @@
+## .functions inspired on https://github.com/mathiasbynens/dotfiles/blob/master/.functions
+
+function mk() {
+  mkdir -p "$@" && cd "$@"
+}
+
+function v() {
+  if [[ $# -eq 0 ]]; then
+    nvim .
+  else
+    nvim "$@"
+  fi
+}
