@@ -56,7 +56,7 @@ basePrograms=(
 "lame"
 "libdca"
 "libdv"
-"libmap"
+"libmad"
 "libmpeg2"
 "libtheora"
 "libvorbis"
@@ -76,7 +76,7 @@ programs=(
 "rofi" # Window switcher, run dialog, ssh-launcher and dmenu
 "rxvt-unicode"
 "lightdm"
-"lightdm gtk-greeter"
+"lightdm-gtk-greeter"
 "lightdm-gtk-greeter-settings"
 "feh"
 "neovim"

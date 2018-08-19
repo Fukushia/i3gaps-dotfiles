@@ -62,9 +62,10 @@ posChroot() {
   ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
   hwclock --systohc # Para gerar o /etc/adjtime // ele assume que o relogio do hardware é UTC
 
-  locale-gen
   echo "LANG=en_US.UTF-8" >> /etc/locale.conf
   echo "KEYMAP=us-acentos" >> /etc/vconsole.conf
+  echo "en_US.UTF=8 UTF-8" >> /etc/locale.gen
+  locale-gen
 
   mkinitcpio -p linux
 
