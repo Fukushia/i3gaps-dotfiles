@@ -3,7 +3,7 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 devBase=$1
 
-if [[ $# -eq 1 ]]; then
+if [[ $# -eq 0 ]]; then
   echo "plz insert the device name"
   exit 1
 fi
@@ -53,9 +53,9 @@ pacstrap /mnt base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-mkdir -p /mnt/tmp
-cp $SCRIPTPATH/$SCRIPT /mnt/tmp/$SCRIPT
-arch-chroot /mnt /usr/bin/bash /tmp/$SCRIPT $devBase --chroot
+mkdir -p /mnt/chroot
+cp $SCRIPT /mnt/chroot/arch-install.sh
+arch-chroot /mnt /usr/bin/bash /chroot/arch-install.sh $devBase --chroot
 }
 
 posChroot() {
@@ -70,13 +70,13 @@ posChroot() {
   mkinitcpio -p linux
 
   # Se usar processador intel:
-  # pacman -S intel-ucode
-  pacman -S grub efibootmgr # necessario para o funcionamento do grub
+  # pacman --noconfirm -S intel-ucode
+  pacman --noconfirm -S grub efibootmgr # necessario para o funcionamento do grub
   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch_grub
   grub-mkconfig -o /boot/grub/grub.cfg
 
-  pacman -S wpa_supplicant dialog
-  pacman -S bash-completion
+  pacman --noconfirm -S wpa_supplicant dialog
+  pacman --noconfirm -S bash-completion
 
   useradd -m -g users -G log,sys,wheel,rfkill,dbus -s /bin/bash vinicius
 
@@ -84,6 +84,7 @@ posChroot() {
 
   passwd
   passwd vinicius
+  rm -rf /chroot
 }
 
 if [[ $2 == "--chroot" ]]; then
