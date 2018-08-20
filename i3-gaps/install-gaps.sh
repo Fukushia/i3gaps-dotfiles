@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Mantain the sudo allong the script
 sudo -v
 ./src/sudo-manager.sh &
@@ -120,6 +121,10 @@ deps_programs=(
 "xsel"
 )
 
+commands_programs=(
+"systemctl enable lightdm"
+)
+
 others=(
 "xf86-input-synaptcs" # touchpad driver
 "network-manager-applet" # graphy network manager
@@ -171,10 +176,11 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
 EOF
 
-sudo bash -c "$fun_install_pac; install_pac ${basePrograms[@]}"
-sudo bash -c "$fun_install_pac; install_pac ${amdVideo[@]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
-sudo bash -c "$fun_install_pac; install_pac ${programs[@]}"
-sudo bash -c "$fun_install_opt; install_opt ${deps_programs[@]}"
+sudo bash -c "$fun_install_pac; install_pac '${basePrograms[@]}'"
+sudo bash -c "$fun_install_pac; install_pac '${amdVideo[@]}'" ## CHANGE IT IF HAVE ANOTHER GPU!!!
+sudo bash -c "$fun_install_pac; install_pac '${programs[@]}'"
+sudo bash -c "$fun_install_opt; install_opt '${deps_programs[@]}'"
+sudo bash -c "$fun_exec_command; exec_command '${commands_programs[@]}'"
 
 #sudo bash -c "$fun_install_pac; install_pac "${others[@]}"
 #sudo bash -c "$fun_exec_command; exec_command "${commands_others[@]}"
@@ -182,40 +188,7 @@ sudo bash -c "$fun_install_opt; install_opt ${deps_programs[@]}"
 install_aur "${aur[@]}"
 
 ## EXEC AS ROOT
-sudo bash -c "$fun_exec_command; exec_command ${commands_aur[@]}"
-
-#######################
-# FILES CONFIGURATION #
-#######################
-
-home_files() {
-  "bash_profile"
-  "Xresources"
-}
-
-lightdm() {
-  "lightdm.conf"
-  "lightdm-gtk-greeter.conf"
-}
-## EXEC AS ROOT
-
-## dotfiles
-ln -fsv $SCRIPTPATH/dotfiles ~/.dotfiles
-
-for i in "${home_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/home_files/$i" "~/.$1"
-}
-
-## i3 configs
-mkdir -p ~/.config
-ln -fsv "$SCRIPTPATH/i3" "~/.config/"
-
-## lightdm
-sudo -E bash << EOF
-for i in "${lightdm[@]}"; {
-	ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
-}
-EOF
+sudo bash -c "$fun_exec_command; exec_command '${commands_aur[@]}'"
 
 ### OTHERS
 
@@ -231,4 +204,3 @@ cd "$SCRIPTPATH"
 EOF
 
 rm "$SCRIPTPATH"/src/sudo_status.txt
-exit 0
