@@ -1,8 +1,10 @@
+#!/bin/bash
+# Mantain the sudo allong the script
+sudo -v
+./src/sudo-manager.sh &
+
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
-
-# Mantain the sudo allong the script
-$SCRIPTPATH/src/sudo-manager.sh &
 
 #############
 # FUNCTIONS #
@@ -227,5 +229,5 @@ sudo -E << EOF
 cd "$SCRIPTPATH"
 EOF
 
-rm "$SCRIPTPATH"/sudo_status.txt
+rm "$SCRIPTPATH"/src/sudo_status.txt
 exit 0

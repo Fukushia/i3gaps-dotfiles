@@ -11,12 +11,12 @@ trap "exit 2" 1 2 3 15
 
 sudo_me() {
  while [ -f $sudo_stat ]; do
-  sudo -Ev
+  sudo -v
   sleep 5
  done &
 }
 
-sudo -Ev
+sudo -v
 sudo_me
 
 echo "=running setup=" >> $log
