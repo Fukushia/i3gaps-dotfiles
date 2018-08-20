@@ -32,10 +32,10 @@ partprobe "$devBase"
 # 8302 -> Linux /home
 
 sgdisk -o "$devBase"
-sgdisk --new=0:0:+550M --typecode=0:ef02 "$devBase"
-sgdisk --new=1:0:+32G --typecode=1:8305 "$devBase"
-sgdisk --new=2:0:+12G --typecode=2:8200 "$devBase"
-sgdisk --new=3:0:+80G --typecode=3:8302 "$devBase"
+sgdisk --new=1:0:+550M --typecode=1:ef02 "$devBase"
+sgdisk --new=2:0:+32G --typecode=2:8305 "$devBase"
+sgdisk --new=3:0:+12G --typecode=3:8200 "$devBase"
+sgdisk --new=4:0:+80G --typecode=4:8302 "$devBase"
 
 mkfs.vfat "$devBase"1
 mkfs.ext4 "$devBase"2
