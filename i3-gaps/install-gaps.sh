@@ -170,25 +170,25 @@ commands_aur=(
 
 ## EXEC AS ROOT
 # Timeout in 100min for not require sudo passwd in aur install
-sudo -E bash << EOF
+sudo -E bash <<EOF
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
 EOF
 
-sudo bash -c "$fun_install_pac; install_pac '${basePrograms[@]}'"
-sudo bash -c "$fun_install_pac; install_pac '${amdVideo[@]}'" ## CHANGE IT IF HAVE ANOTHER GPU!!!
-sudo bash -c "$fun_install_pac; install_pac '${programs[@]}'"
-sudo bash -c "$fun_install_opt; install_opt '${deps_programs[@]}'"
-sudo bash -c "$fun_exec_command; exec_command '${commands_programs[@]}'"
+sudo bash -c "$fun_install_pac; install_pac '${basePrograms[*]}'"
+sudo bash -c "$fun_install_pac; install_pac '${amdVideo[*]}'" ## CHANGE IT IF HAVE ANOTHER GPU!!!
+sudo bash -c "$fun_install_pac; install_pac '${programs[*]}'"
+sudo bash -c "$fun_install_opt; install_opt '${deps_programs[*]}'"
+sudo bash -c "$fun_exec_command; exec_command '${commands_programs[*]}'"
 
-#sudo bash -c "$fun_install_pac; install_pac "${others[@]}"
-#sudo bash -c "$fun_exec_command; exec_command "${commands_others[@]}"
+#sudo bash -c "$fun_install_pac; install_pac "${others[*]}"
+#sudo bash -c "$fun_exec_command; exec_command "${commands_others[*]}"
 
-install_aur "${aur[@]}"
+install_aur "${aur[*]}"
 
 ## EXEC AS ROOT
-sudo bash -c "$fun_exec_command; exec_command '${commands_aur[@]}'"
+sudo bash -c "$fun_exec_command; exec_command '${commands_aur[*]}'"
 
 ### OTHERS
 
@@ -198,7 +198,7 @@ git clone https://github.com/Fukushia/neoVim-configs.git
 mv neoVim-configs nvim
 cd nvim
 
-sudo -E << EOF
+sudo -E <<EOF
 ./install.sh
 cd "$SCRIPTPATH"
 EOF
