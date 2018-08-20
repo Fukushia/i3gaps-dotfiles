@@ -15,18 +15,21 @@ exec_command() {
 		"$i"
 	}
 }
+fun_exec_command=$(declare -f exec_command)
 
 install_pac() {
 	for i in "$@"; {
 		pacman --noconfirm -S "$i"
 	}
 }
+fun_install_pac=$(declare -f install_pac)
 
 install_opt() {
 	for i in "$@"; {
 		pacman --noconfirm --asdeps -S "$i"
 	}
 }
+fun_install_opt=$(cleare -f install_opt)
 
 install_aur() {
 	for i in "$@"; {
@@ -166,22 +169,20 @@ sudo -E bash << EOF
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
-
-install_pac "${basePrograms[@]}"
-install_pac "${amdVideo[@]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
-install_pac "${programs[@]}"
-install_opt "${deps_programs[@]}" 
-
-#install_pac "${others[@]}"
-#exec_command "${commands_others[@]}"
 EOF
+
+sudo bash -c "$fun_install_pac; install_pac ${basePrograms[@]}"
+sudo bash -c "$fun_install_pac; install_pac ${amdVideo[@]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
+sudo bash -c "$fun_install_pac; install_pac ${programs[@]}"
+sudo bash -c "$fun_install_opt; install_opt ${deps_programs[@]}"
+
+#sudo bash -c "$fun_install_pac; install_pac "${others[@]}"
+#sudo bash -c "$fun_exec_command; exec_command "${commands_others[@]}"
 
 install_aur "${aur[@]}"
 
 ## EXEC AS ROOT
-sudo -E bash << EOF
-exec_command "${commands_aur[@]}"
-EOF
+sudo bash -c "$fun_exec_command; exec_command ${commands_aur[@]}"
 
 #######################
 # FILES CONFIGURATION #
