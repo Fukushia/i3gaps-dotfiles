@@ -2,7 +2,7 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 # Mantain the sudo allong the script
-$SCRIPTPATH/src/sudo-manager &
+$SCRIPTPATH/src/sudo-manager.sh &
 
 #############
 # FUNCTIONS #
@@ -160,7 +160,7 @@ commands_aur=(
 
 ## EXEC AS ROOT
 # Timeout in 100min for not require sudo passwd in aur install
-sudo -E -T 100 bash << EOF
+sudo -E bash << EOF
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
