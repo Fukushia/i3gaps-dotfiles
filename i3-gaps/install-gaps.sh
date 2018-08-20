@@ -142,9 +142,8 @@ commands_others=(
 aur=(
 "polybar"
 "brave"
-"nerd-fonts-complete"
+"nerd-fonts-complete" # Or exec only SourceCodePro-install.sh
 "preload"
-
 #"shantz-xwinwrap-bzr"
 )
 
@@ -157,7 +156,8 @@ commands_aur=(
 # EXECS #
 
 ## EXEC AS ROOT
-sudo -E bash << EOF
+# Timeout in 100min for not require sudo passwd in aur install
+sudo -E -T 100 bash << EOF
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
@@ -166,6 +166,7 @@ install_pac "${basePrograms[@]}"
 install_pac "${amdVideo[@]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
 install_pac "${programs[@]}"
 install_opt "${deps_programs[@]}" 
+
 #install_pac "${others[@]}"
 #exec_command "${commands_others[@]}"
 EOF
