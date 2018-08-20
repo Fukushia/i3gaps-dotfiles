@@ -17,12 +17,15 @@ lightdm() {
 ln -fsv $SCRIPTPATH/dotfiles ~/.dotfiles
 
 for i in "${home_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/home-files$i" "~/.$1"
+	ln -fsv "$SCRIPTPATH/home-files/$i" "~/.$1"
 }
 
 ## i3 configs
 mkdir -p ~/.config
-ln -fsv "$SCRIPTPATH/i3" "~/.config/"
+ln -fsv "$SCRIPTPATH/i3" ~/.config
+
+## polybar
+ln -fsv "$SCRIPTPATH/polybar" ~/.config
 
 ## lightdm
 sudo -E bash << EOF

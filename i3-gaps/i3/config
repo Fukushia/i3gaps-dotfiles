@@ -167,5 +167,5 @@ bindsym XF86AudioPrev exec playerctl previous
 exec_always --no-startup-id compton 
 #exec_always --no-startup-id xwinwrap -ni -d -fs -s -a -ov -- mpv --ao=null -wid WID ~/wallpaperVideos/1
 exec ~/.config/i3/feh-slides
-exec_always ~/.config/polybar/polybar.sh 
+exec_always polybar example
 exec_always --no-startup-id nm-applet

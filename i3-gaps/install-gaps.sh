@@ -119,6 +119,7 @@ deps_programs=(
 "python-neovim"
 "xclip"
 "xsel"
+# pandoc
 )
 
 commands_programs=(
@@ -176,19 +177,20 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
 EOF
 
-sudo bash -c "$fun_install_pac; install_pac '${basePrograms[*]}'"
-sudo bash -c "$fun_install_pac; install_pac '${amdVideo[*]}'" ## CHANGE IT IF HAVE ANOTHER GPU!!!
-sudo bash -c "$fun_install_pac; install_pac '${programs[*]}'"
-sudo bash -c "$fun_install_opt; install_opt '${deps_programs[*]}'"
-sudo bash -c "$fun_exec_command; exec_command '${commands_programs[*]}'"
+sudo bash -c "$fun_install_pac; install_pac ${basePrograms[*]}"
+sudo bash -c "$fun_install_pac; install_pac ${amdVideo[*]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
+sudo bash -c "$fun_install_pac; install_pac ${programs[*]}"
+sudo bash -c "$fun_install_opt; install_opt ${deps_programs[*]}"
+sudo bash -c "$fun_exec_command; exec_command ${commands_programs[*]}"
 
-#sudo bash -c "$fun_install_pac; install_pac "${others[*]}"
-#sudo bash -c "$fun_exec_command; exec_command "${commands_others[*]}"
+#sudo bash -c "$fun_install_pac; install_pac ${others[*]}"
+#sudo bash -c "$fun_exec_command; exec_command ${commands_others[*]}"
 
 install_aur "${aur[*]}"
 
+#TODO: Esta saindo separado e @ nao consegue resolver
 ## EXEC AS ROOT
-sudo bash -c "$fun_exec_command; exec_command '${commands_aur[*]}'"
+sudo bash -c "$fun_exec_command; exec_command ${commands_aur[*]}"
 
 ### OTHERS
 
