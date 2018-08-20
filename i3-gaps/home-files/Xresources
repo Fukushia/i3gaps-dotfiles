@@ -42,7 +42,8 @@ URxvt.internalBorder: 4
 ! COLORS
 ! breeze - terminal colours based on the KDE Breeze palette
 
-URxvt*foreground:   #fcfcfc
+!URxvt*foreground:   #fcfcfc
+URxvt*foreground:   #232629
 URxvt*background:   #232629
 URxvt*cursorColor:  #1abc9c
 
@@ -80,4 +81,4 @@ URxvt*color15: #fcfcfc
 
 !transparency
 URxvt.transparent:	true
-URxvt.shading: 5 
+URxvt.shading: 4 

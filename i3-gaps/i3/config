@@ -147,6 +147,10 @@ new_window 1pixel
 new_float normal
 hide_edge_borders none
 
+# Gaps
+gaps inner 5
+gaps outer 5
+
 # SPECIAL WINDOWS CONFIGS
 for_window [class="XTerm"] floating enable
 #for_window [class="urxvt"] border pixel 0
@@ -167,5 +171,5 @@ bindsym XF86AudioPrev exec playerctl previous
 exec_always --no-startup-id compton 
 #exec_always --no-startup-id xwinwrap -ni -d -fs -s -a -ov -- mpv --ao=null -wid WID ~/wallpaperVideos/1
 exec ~/.config/i3/feh-slides
-exec_always polybar example
+exec ~/.config/polybar/polybar.sh
 exec_always --no-startup-id nm-applet
