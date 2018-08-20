@@ -1,6 +1,9 @@
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+# Mantain the sudo allong the script
+$SCRIPTPATH/src/sudo-manager &
+
 #############
 # FUNCTIONS #
 #############
@@ -142,7 +145,7 @@ commands_others=(
 aur=(
 "polybar"
 "brave"
-"nerd-fonts-complete" # Or exec only SourceCodePro-install.sh
+"nerd-fonts-complete" # Or exec only SourceCodePro-install.sh in .src/
 "preload"
 #"shantz-xwinwrap-bzr"
 )
@@ -223,3 +226,6 @@ sudo -E << EOF
 ./install.sh
 cd "$SCRIPTPATH"
 EOF
+
+rm "$SCRIPTPATH"/sudo_status.txt
+exit 0
