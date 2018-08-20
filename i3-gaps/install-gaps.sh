@@ -29,7 +29,7 @@ install_opt() {
 		pacman --noconfirm --asdeps -S "$i"
 	}
 }
-fun_install_opt=$(cleare -f install_opt)
+fun_install_opt=$(declare -f install_opt)
 
 install_aur() {
 	for i in "$@"; {
