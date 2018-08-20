@@ -181,50 +181,30 @@ EOF
 # FILES CONFIGURATION #
 #######################
 
-dotfiles=(
-"alias"
-"functions"
-"inputrc"
-"bashrc"
-)
-
-home_files=(
-"Xresources"
-"bash_profile"
-)
-
-i3_files=(
-"config"
-"feh-slides"
-"flameshot.sh"
-)
-
-lightdm=(
-"lightdm.conf"
-"lightdm-gtk-greeter.conf"
-)
-
-# EXECS #
-
-## EXEC AS ROOT
-sudo -E bash << EOF
-## dotfiles
-mkdir -p ~/.dotfiles
-for i in"${dotfiles[@]}"; {
-  ln -fsv "$SCRIPTPATH/dotfiles/$1" "~/.dotfiles/$1"
+home_files() {
+  "bash_profile"
+  "Xresources"
 }
+
+lightdm() {
+  "lightdm.conf"
+  "lightdm-gtk-greeter.conf"
+}
+## EXEC AS ROOT
+
+## dotfiles
+ln -fsv $SCRIPTPATH/dotfiles ~/.dotfiles
+
 for i in "${home_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/dotfiles/$i" "~/.$1"
+	ln -fsv "$SCRIPTPATH/home_files/$i" "~/.$1"
 }
 
 ## i3 configs
 mkdir -p ~/.config
-mkdir -p ~/.config/i3
-for i in "${i3_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/i3/$i" "~/.config/i3/$1"
-}
+ln -fsv "$SCRIPTPATH/i3" "~/.config/"
 
 ## lightdm
+sudo -E bash << EOF
 for i in "${lightdm[@]}"; {
 	ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
 }
