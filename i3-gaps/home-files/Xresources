@@ -38,12 +38,14 @@ URxvt.letterSpace: -1
 URxvt.scrollBar: false
 ! Distance between text and border
 URxvt.internalBorder: 4
+URxvt.borderLess: false
+transparent=0000 opaque=ffff
 
 ! COLORS
 ! breeze - terminal colours based on the KDE Breeze palette
 
-!URxvt*foreground:   #fcfcfc
-URxvt*foreground:   #232629
+URxvt*foreground:   #fcfcfc
+!URxvt*foreground:   #232629
 URxvt*background:   #232629
 URxvt*cursorColor:  #1abc9c
 
@@ -81,4 +83,4 @@ URxvt*color15: #fcfcfc
 
 !transparency
 URxvt.transparent:	true
-URxvt.shading: 4 
+!URxvt.shading: 3

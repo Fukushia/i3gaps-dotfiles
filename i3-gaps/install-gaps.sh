@@ -97,7 +97,9 @@ programs=(
 "openssh"
 "git"
 "compton"
-
+"libreoffice"
+"mpv"
+"youtube-dl"
 #"network-manager-applet"
 )
 
@@ -120,6 +122,7 @@ deps_programs=(
 "xclip"
 "xsel"
 # pandoc
+# TODO
 )
 
 commands_programs=(
@@ -158,7 +161,7 @@ aur=(
 "brave"
 "nerd-fonts-complete" # Or exec only SourceCodePro-install.sh in .src/
 "preload"
-#"shantz-xwinwrap-bzr"
+"shantz-xwinwrap-bzr"
 )
 
 commands_aur=(

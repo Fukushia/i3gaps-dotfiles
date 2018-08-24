@@ -8,6 +8,9 @@ set $mod Mod4
 font pango:Noto Mono 8, fontawesome-webfont.ttf 8
 floating_modifier $mod
 
+# BRIGHTNESS
+# tee /sys/class/backlight/radeon_bl0/brightness <<< 100
+
 # MAIN BINDINGS
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
@@ -27,6 +30,11 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Alt xrdb ~/.Xresources
+
+# Wallpapers binds
+bindsym $mod+Ctrl+Alt+1 exec ~/.config/wallpapers/mpv.sh "--ao=null --loop-file=inf /home/vinicius/animated_wallpapers/"
+bindsym $mod+Ctrl+Alt+2 exec ~/.config/wallpapers/mpv.sh "--ytdl-format=mp4 https://www.youtube.com/playlist?list=PLVSNC7jSijbp3M9vsVhHUa75Q5YX7CjuN"
+
 
 # FOCUS
 bindsym $mod+j focus left
@@ -143,7 +151,7 @@ bindsym $mod+r mode "resize"
   client.background       #2B2C2B
 
 # Border style <normal|1pixel|pixel xx|none|pixel>
-new_window 1pixel
+new_window none
 new_float normal
 hide_edge_borders none
 
@@ -169,7 +177,8 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # EXECS
 exec_always --no-startup-id compton 
-#exec_always --no-startup-id xwinwrap -ni -d -fs -s -a -ov -- mpv --ao=null -wid WID ~/wallpaperVideos/1
-exec ~/.config/i3/feh-slides
-exec ~/.config/polybar/polybar.sh
+#exec ~/.config/i3/feh-slides
+exec_always ~/.config/polybar/polybar.sh
 exec_always --no-startup-id nm-applet
+exec_always ~/.config/wallpapers/mpv.sh "--ao=null --loop-file=inf /home/vinicius/animated_wallpapers/"
+#exec_always ~/.config/wallpapers/mpv.sh "--ao=null /home/vinicius/animated_wallpapers/"

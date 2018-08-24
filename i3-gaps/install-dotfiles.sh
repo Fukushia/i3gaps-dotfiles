@@ -27,6 +27,12 @@ ln -fsv "$SCRIPTPATH/i3" ~/.config
 ## polybar
 ln -fsv "$SCRIPTPATH/polybar" ~/.config
 
+## Compton
+ln -fsv "$SCRIPTPATH/compton/compton.conf" ~/.config
+
+## wallpapers
+ln -fsv "$SCRIPTPATH/wallpapers" ~/.config
+
 ## lightdm
 sudo -E bash << EOF
 for i in "${lightdm[@]}"; {

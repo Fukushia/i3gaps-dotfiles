@@ -1,2 +1,4 @@
 #!/bin/bash
-polybar example
+killall -q polybar &
+wait
+polybar main
