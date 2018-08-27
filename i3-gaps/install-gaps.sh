@@ -100,6 +100,8 @@ programs=(
 "libreoffice"
 "mpv"
 "youtube-dl"
+"zsh"
+"zsh-theme-powerlevel9k"
 #"network-manager-applet"
 )
 
