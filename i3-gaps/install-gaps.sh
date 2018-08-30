@@ -102,6 +102,9 @@ programs=(
 "youtube-dl"
 "zsh"
 "zsh-theme-powerlevel9k"
+"android-file-transfer"
+"libmtp"
+"cmus"
 #"network-manager-applet"
 )
 

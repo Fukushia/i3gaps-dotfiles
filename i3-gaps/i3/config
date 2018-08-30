@@ -32,9 +32,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+Alt xrdb ~/.Xresources
 
 # Wallpapers binds
-bindsym $mod+Ctrl+Alt+1 exec ~/.config/wallpapers/mpv.sh "--ao=null --loop-file=inf /home/vinicius/animated_wallpapers/"
-bindsym $mod+Ctrl+Alt+2 exec ~/.config/wallpapers/mpv.sh "--ytdl-format=mp4 https://www.youtube.com/playlist?list=PLVSNC7jSijbp3M9vsVhHUa75Q5YX7CjuN"
-bindsym $mod+Ctrl+Alt+3 exec ~/.config/i3/feh-slides
+bindsym $mod+F1 exec ~/.config/wallpapers/mpv.sh "--ao=null --loop-file=inf /home/vinicius/animated_wallpapers/"
+bindsym $mod+F2 exec ~/.config/wallpapers/mpv.sh "--ytdl-format=mp4 https://www.youtube.com/playlist?list=PLVSNC7jSijbp3M9vsVhHUa75Q5YX7CjuN"
+bindsym $mod+F3 exec ~/.config/i3/feh-slides
 
 # FOCUS
 bindsym $mod+j focus left
@@ -120,10 +120,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -162,7 +162,7 @@ gaps outer 5
 
 # SPECIAL WINDOWS CONFIGS
 for_window [class="XTerm"] floating enable
-#for_window [class="urxvt"] border pixel 0
+for_window [class="urxvt"] border pixel 0
 
 # Hiding borders
 hide_edge_borders both
