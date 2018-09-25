@@ -84,4 +84,4 @@ URxvt*color15: #fcfcfc
 
 !transparency
 URxvt.transparent:	true
-!URxvt.shading: 3
+URxvt.shading: 4
