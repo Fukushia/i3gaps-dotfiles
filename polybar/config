@@ -56,13 +56,17 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+
+font-0 = SauceCodePro Nerd Font:pixelsize=10;1
+font-1 = SauceCodePro Nerd Font:pixelsize=7;1
+font-2 = SauceCodePro Nerd Font:pixelsize=10;1
+#font-0 = fixed:pixelsize=10;1
+#font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+#font-2 = siji:pixelsize=10;1
 ;bspwm
 modules-left = i3 
 modules-center = xwindow 
-modules-right = xbacklight xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-right = bspwm xbacklight xkeyboard memory cpu wlan eth battery temperature date powermenu
 
 tray-position = right
 tray-padding = 2
@@ -141,7 +145,7 @@ type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 enable_click = true
-enable_scroll = false
+#enable_scroll = false
 wrapping-scroll = false
 
 # WORKSPACES NAMES
