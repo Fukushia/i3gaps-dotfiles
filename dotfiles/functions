@@ -1,13 +1,17 @@
 ## .functions inspired on https://github.com/mathiasbynens/dotfiles/blob/master/.functions
 
-function mk() {
+mk() {
   mkdir -p "$@" && cd "$@"
 }
 
-function v() {
+v() {
   if [[ $# -eq 0 ]]; then
     nvim .
   else
     nvim "$@"
   fi
+}
+
+yt() {
+  exec ~/.config/wallpapers/mpv.sh "-f mp4 $@"
 }
