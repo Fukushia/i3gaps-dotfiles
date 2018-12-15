@@ -5,8 +5,17 @@ My i3-gaps dotfiles
 ![](demo.gif)
 
 # How Install
-Install the ArchLinux with arch-install.sh (or do it with your own hands)
+Install the ArchLinux (or do it with your own hands) with:
 
-Install all dependencies with install-gaps.sh (uncomment optional deps for install or not)
+```sh
+arch-install.sh [/dev/sdx]
+```
 
-Install the configurations with install-dotfiles.sh
+Install all dependencies and the dotfiles with: 
+
+```sh
+install-gaps.sh
+```
+> OBS: uncomment optional deps for install or not
+
+> IMPORTANT: NOT run it in arch-chroot mode
