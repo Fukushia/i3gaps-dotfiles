@@ -10,6 +10,7 @@ Install the ArchLinux (or do it with your own hands) with:
 ```sh
 arch-install.sh [/dev/sdx]
 ```
+> IMPORTANTE: This script only works on GPT systems
 
 Install all dependencies and the dotfiles with: 
 
