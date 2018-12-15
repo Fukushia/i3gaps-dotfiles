@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# Mantain the sudo allong the script
-sudo -v
-./src/sudo-manager.sh &
-
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
+
+# Mantain the sudo allong the script
+sudo -v
+$SCRIPTPATH/src/sudo-manager.sh &
+
+
 
 #############
 # FUNCTIONS #
@@ -192,9 +194,11 @@ sudo bash -c "$fun_install_pac; install_pac ${programs[*]}"
 sudo bash -c "$fun_install_opt; install_opt ${deps_programs[*]}"
 sudo bash -c "$fun_exec_command; exec_command ${commands_programs[*]}"
 
-#sudo bash -c "$fun_install_pac; install_pac ${others[*]}"
-#sudo bash -c "$fun_exec_command; exec_command ${commands_others[*]}"
+## (change it) FULL OPTIONALS
+sudo bash -c "$fun_install_pac; install_pac ${others[*]}"
+sudo bash -c "$fun_exec_command; exec_command ${commands_others[*]}"
 
+# AUR programs
 install_aur "${aur[*]}"
 
 #TODO: Esta saindo separado e @ nao consegue resolver
@@ -209,8 +213,9 @@ git clone https://github.com/Fukushia/neoVim-configs.git
 mv neoVim-configs nvim
 cd nvim
 
+# Install dotfiles
 sudo -E <<EOF
-./install.sh
+$SCRIPTPATH/src/install-dotfiles.sh
 cd "$SCRIPTPATH"
 EOF
 
