@@ -19,4 +19,6 @@ install-gaps.sh
 ```
 > OBS: uncomment optional deps for install or not
 
+> OBS²: This file is referenced by symbolic links
+
 > IMPORTANT: NOT run it in arch-chroot mode
