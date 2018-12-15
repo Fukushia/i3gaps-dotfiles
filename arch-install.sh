@@ -22,6 +22,9 @@ timedatectl set-ntp true
 sgdisk --zap-all "$devBase"
 partprobe "$devBase"
 
+sgdisk -g "$devBase"
+partprobe "$devBase"
+
 # MORE IN: https://fitzcarraldoblog.wordpress.com/2017/02/10/partitioning-hard-disk-drives-for-bios-mbr-bios-gpt-and-uefi-gpt-in-linux/
 
 # typecodes:
@@ -81,8 +84,10 @@ posChroot() {
   useradd -m -g users -G log,sys,wheel,rfkill,dbus -s /bin/bash vinicius
 
   sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
-
+  
+  echo "root password"
   passwd
+  echo "user password"
   passwd vinicius
   rm -rf /chroot
 }
