@@ -6,4 +6,7 @@ for DOTFILE in `find ~/.dotfiles/*`; do
   [ -f "$DOTFILE" ] && source "$DOTFILE"
 done
 
+export PATH=$PATH:/opt/mssql/bin
+
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+

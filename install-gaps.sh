@@ -105,6 +105,7 @@ programs=(
 "android-file-transfer"
 "libmtp"
 "cmus"
+"xreader"
 #"network-manager-applet"
 )
 
