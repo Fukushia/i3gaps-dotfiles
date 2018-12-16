@@ -10,6 +10,7 @@ Install the ArchLinux (or do it with your own hands) with:
 ```sh
 arch-install.sh [/dev/sdx]
 ```
+> IMPORTANT: This script only works on GPT systems
 
 Install all dependencies and the dotfiles with: 
 
@@ -17,5 +18,7 @@ Install all dependencies and the dotfiles with:
 install-gaps.sh
 ```
 > OBS: uncomment optional deps for install or not
+
+> OBS²: This file is referenced by symbolic links
 
 > IMPORTANT: NOT run it in arch-chroot mode
