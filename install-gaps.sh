@@ -7,15 +7,13 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 sudo -v
 $SCRIPTPATH/src/sudo-manager.sh &
 
-
-
 #############
 # FUNCTIONS #
 #############
 
 exec_command() {
 	for i in "$@"; {
-		"$i"
+		eval "$i"
 	}
 }
 fun_exec_command=$(declare -f exec_command)
@@ -192,18 +190,17 @@ sudo bash -c "$fun_install_pac; install_pac ${basePrograms[*]}"
 sudo bash -c "$fun_install_pac; install_pac ${amdVideo[*]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
 sudo bash -c "$fun_install_pac; install_pac ${programs[*]}"
 sudo bash -c "$fun_install_opt; install_opt ${deps_programs[*]}"
-sudo bash -c "$fun_exec_command; exec_command ${commands_programs[*]}"
+sudo bash -c $fun_exec_command; exec_command "${commands_programs[@]}" # warning: out in line 1 with: (): "exec_command: command not found", but working
 
-## (change it) FULL OPTIONALS
+## (CHANGE IT) FULL OPTIONALS
 sudo bash -c "$fun_install_pac; install_pac ${others[*]}"
-sudo bash -c "$fun_exec_command; exec_command ${commands_others[*]}"
+sudo bash -c $fun_exec_command; exec_command "${commands_others[@]}"
 
 # AUR programs
 install_aur "${aur[*]}"
 
-#TODO: Esta saindo separado e @ nao consegue resolver
 ## EXEC AS ROOT
-sudo bash -c "$fun_exec_command; exec_command ${commands_aur[*]}"
+sudo bash -c $fun_exec_command; exec_command "${commands_aur[@]}"
 
 ### OTHERS
 
