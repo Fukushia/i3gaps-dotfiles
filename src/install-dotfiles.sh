@@ -14,28 +14,26 @@ lightdm() {
 ## EXEC AS ROOT
 
 ## dotfiles
-ln -fsv $SCRIPTPATH/dotfiles ~/.dotfiles
+sudo ln -fsv "$SCRIPTPATH/dotfiles" "~/.dotfiles"
 
 for i in "${home_files[@]}"; {
-	ln -fsv "$SCRIPTPATH/home-files/$i" "~/.$1"
+	sudo ln -fsv "$SCRIPTPATH/home-files/$i" "~/.$1"
 }
 
 ## i3 configs
-mkdir -p ~/.config
-ln -fsv "$SCRIPTPATH/i3" ~/.config
+mkdir -p "~/.config"
+sudo ln -fsv "$SCRIPTPATH/i3" "~/.config"
 
 ## polybar
-ln -fsv "$SCRIPTPATH/polybar" ~/.config
+sudo ln -fsv "$SCRIPTPATH/polybar" "~/.config"
 
 ## Compton
-ln -fsv "$SCRIPTPATH/compton/compton.conf" ~/.config
+sudo ln -fsv "$SCRIPTPATH/compton/compton.conf" "~/.config"
 
 ## wallpapers
-ln -fsv "$SCRIPTPATH/wallpapers" ~/.config
+sudo ln -fsv "$SCRIPTPATH/wallpapers" "~/.config"
 
 ## lightdm
-sudo -E bash << EOF
 for i in "${lightdm[@]}"; {
-	ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
+	sudo ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/$1"
 }
-EOF

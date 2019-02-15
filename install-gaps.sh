@@ -16,21 +16,18 @@ exec_command() {
 		eval "$i"
 	}
 }
-fun_exec_command=$(declare -f exec_command)
 
 install_pac() {
 	for i in "$@"; {
-		pacman --noconfirm -S "$i"
+		sudo pacman --noconfirm -S "$i"
 	}
 }
-fun_install_pac=$(declare -f install_pac)
 
 install_opt() {
 	for i in "$@"; {
-		pacman --noconfirm --asdeps -S "$i"
+		sudo pacman --noconfirm --asdeps -S "$i"
 	}
 }
-fun_install_opt=$(declare -f install_opt)
 
 install_aur() {
 	for i in "$@"; {
@@ -132,7 +129,7 @@ deps_programs=(
 )
 
 commands_programs=(
-"systemctl enable lightdm"
+"sudo systemctl enable lightdm"
 )
 
 others=(
@@ -156,10 +153,10 @@ others=(
 )
 
 commands_others=(
-"systemctl enable bluetooth && systemctl start bluetooth"
-"systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
-"systemctl enable ufw.service &&systemctl start ufw.service"
-"mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
+"sudo systemctl enable bluetooth && systemctl start bluetooth"
+"sudo systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
+"sudo systemctl enable ufw.service &&systemctl start ufw.service"
+"sudo mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
 )
 
 aur=(
@@ -180,27 +177,28 @@ commands_aur=(
 
 ## EXEC AS ROOT
 # Timeout in 100min for not require sudo passwd in aur install
+# TODO: Implement regex to avoid multiple multilibs
 sudo -E bash <<EOF
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syu
 EOF
 
-sudo bash -c "$fun_install_pac; install_pac ${basePrograms[*]}"
-sudo bash -c "$fun_install_pac; install_pac ${amdVideo[*]}" ## CHANGE IT IF HAVE ANOTHER GPU!!!
-sudo bash -c "$fun_install_pac; install_pac ${programs[*]}"
-sudo bash -c "$fun_install_opt; install_opt ${deps_programs[*]}"
-sudo bash -c $fun_exec_command; exec_command "${commands_programs[@]}" # warning: out in line 1 with: (): "exec_command: command not found", but working
+install_pac ${basePrograms[*]}
+install_pac ${amdVideo[*]} ## CHANGE IT IF HAVE ANOTHER GPU!!!
+install_pac ${programs[*]}
+install_opt ${deps_programs[*]}
+exec_command ${commands_programs[@]}
 
 ## (CHANGE IT) FULL OPTIONALS
-sudo bash -c "$fun_install_pac; install_pac ${others[*]}"
-sudo bash -c $fun_exec_command; exec_command "${commands_others[@]}"
+install_pac ${others[*]}
+exec_command ${commands_others[@]}
 
 # AUR programs
-install_aur "${aur[*]}"
+install_aur ${aur[*]}
 
 ## EXEC AS ROOT
-sudo bash -c $fun_exec_command; exec_command "${commands_aur[@]}"
+exec_command ${commands_aur[@]}
 
 ### OTHERS
 
