@@ -37,12 +37,15 @@ install_opt() {
 }
 
 install_aur() {
+	mkdir -p aur
+	cd aur
 	for i in "$@"; {
 		git clone "https://aur.archlinux.org/$i.git"
 		cd "$i"
 		makepkg -si --needed --noconfirm
-		cd "$SCRIPTPATH"
+		cd ..
 	}
+	cd "$SCRIPTPATH"
 }
 
 #######################
