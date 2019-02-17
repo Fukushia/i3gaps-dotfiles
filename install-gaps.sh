@@ -11,6 +11,13 @@ $SCRIPTPATH/src/sudo-manager.sh &
 # FUNCTIONS #
 #############
 
+
+sudo_exec_command() {
+	for i in "$@"; {
+		sudo "$i"
+	}
+}
+
 exec_command() {
 	for i in "$@"; {
 		eval "$i"
@@ -19,13 +26,13 @@ exec_command() {
 
 install_pac() {
 	for i in "$@"; {
-		sudo pacman --noconfirm -S "$i"
+		sudo pacman --needed --noconfirm -S "$i"
 	}
 }
 
 install_opt() {
 	for i in "$@"; {
-		sudo pacman --noconfirm --asdeps -S "$i"
+		sudo pacman --needed --noconfirm --asdeps -S "$i"
 	}
 }
 
@@ -33,7 +40,7 @@ install_aur() {
 	for i in "$@"; {
 		git clone "https://aur.archlinux.org/$i.git"
 		cd "$i"
-		makepkg -si --noconfirm
+		makepkg -si --needed --noconfirm
 		cd "$SCRIPTPATH"
 	}
 }
@@ -128,8 +135,8 @@ deps_programs=(
 # TODO
 )
 
-commands_programs=(
-"sudo systemctl enable lightdm"
+sudo_commands_programs=(
+"systemctl enable lightdm"
 )
 
 others=(
@@ -152,24 +159,27 @@ others=(
 "linux-lts-headers" # optional
 )
 
-commands_others=(
-"sudo systemctl enable bluetooth && systemctl start bluetooth"
-"sudo systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
-"sudo systemctl enable ufw.service &&systemctl start ufw.service"
-"sudo mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
+sudo_commands_others=(
+"systemctl enable bluetooth && systemctl start bluetooth"
+"systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
+"systemctl enable ufw.service &&systemctl start ufw.service"
+"mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
 )
 
 aur=(
 "polybar"
-"brave"
+#"brave"
 "nerd-fonts-complete" # Or exec only SourceCodePro-install.sh in .src/
 "preload"
 "shantz-xwinwrap-bzr"
 )
 
-commands_aur=(
+sudo_commands_aur=(
 "systemctl enable preload"
 "systemctl start preload"
+)
+
+commands_aur=(
 "fc-cache -vf"
 )
 
@@ -188,17 +198,18 @@ install_pac ${basePrograms[*]}
 install_pac ${amdVideo[*]} ## CHANGE IT IF HAVE ANOTHER GPU!!!
 install_pac ${programs[*]}
 install_opt ${deps_programs[*]}
-exec_command ${commands_programs[@]}
+sudo_exec_command "${sudo_commands_programs[@]}"
 
 ## (CHANGE IT) FULL OPTIONALS
 install_pac ${others[*]}
-exec_command ${commands_others[@]}
+sudo_exec_command "${sudo_commands_others[@]}"
 
 # AUR programs
 install_aur ${aur[*]}
 
 ## EXEC AS ROOT
-exec_command ${commands_aur[@]}
+sudo_exec_command "${sudo_commands_aur[@]}"
+exec_command "${commands_aur[@]}"
 
 ### OTHERS
 
@@ -209,9 +220,7 @@ mv neoVim-configs nvim
 cd nvim
 
 # Install dotfiles
-sudo -E <<EOF
-$SCRIPTPATH/src/install-dotfiles.sh
+sudo $SCRIPTPATH/install-dotfiles.sh
 cd "$SCRIPTPATH"
-EOF
 
 rm "$SCRIPTPATH"/src/sudo_status.txt
