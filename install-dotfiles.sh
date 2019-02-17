@@ -31,9 +31,11 @@ ln -fsv "$SCRIPTPATH/polybar" "$HOME/.config/"
 ln -fsv "$SCRIPTPATH/compton/compton.conf" "$HOME/.config/compton.conf"
 
 ## wallpapers
-ln -fsv "$SCRIPTPATH/wallpapers" "$HOME/.config/"
+ln -fsv "$SCRIPTPATH/wallpapers" "$HOME/"
 
 ## lightdm
+sudo cp "$SCRIPTPATH/wallpapers/images/amazing-blur-breathtaking.jpg" "/usr/share/pixmaps/gtkWallpaper.jpg"
 for i in "${lightdm[@]}"; {
-	sudo ln -fsv "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/"
+	sudo rm -f "/etc/lightdm/$i"
+	sudo cp -f "$SCRIPTPATH/lightdm/$i" "/etc/lightdm/"
 }

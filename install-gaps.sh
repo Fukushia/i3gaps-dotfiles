@@ -14,26 +14,24 @@ $SCRIPTPATH/src/sudo-manager.sh &
 
 sudo_exec_command() {
 	for i in "$@"; {
-		sudo "$i"
+		sudo $i
 	}
 }
 
 exec_command() {
 	for i in "$@"; {
-		eval "$i"
+		$i
 	}
 }
 
 install_pac() {
-	for i in "$@"; {
-		sudo pacman --needed --noconfirm -S "$i"
-	}
+	sudo pacman --needed --noconfirm -S $@
+	#for i in "$@"; {
+	#}
 }
 
 install_opt() {
-	for i in "$@"; {
-		sudo pacman --needed --noconfirm --asdeps -S "$i"
-	}
+	sudo pacman --needed --noconfirm --asdeps -S $@
 }
 
 install_aur() {
@@ -163,10 +161,10 @@ others=(
 )
 
 sudo_commands_others=(
-"systemctl enable bluetooth && systemctl start bluetooth"
-"systemctl enable org.cups.cupsd.service && systemctl start org.cups.cupsd.service"
-"systemctl enable ufw.service &&systemctl start ufw.service"
-"mkinitcpio -p linux-lts && grub-mkconfig -o /boot/grub/grub.cfg"
+"systemctl enable bluetooth" "systemctl start bluetooth"
+"systemctl enable org.cups.cupsd.service" "systemctl start org.cups.cupsd.service"
+"systemctl enable ufw.service" "systemctl start ufw.service"
+"mkinitcpio -p linux-lts" "grub-mkconfig -o /boot/grub/grub.cfg"
 )
 
 aur=(
