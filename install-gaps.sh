@@ -51,6 +51,7 @@ install_aur() {
 #######################
 
 basePrograms=(
+## Main programs
 "xorg-server"
 "xorg-xinit"
 "xorg-apps"
@@ -58,10 +59,12 @@ basePrograms=(
 "alsa-utils"
 "pulseaudio"
 "pavucontrol"
-# Plugins
+
+## Plugins
 "alsa-oss"
 "alsa-lib"
-# Codecs
+
+## Codecs
 "a52dec"
 "faac"
 "faad2"
@@ -111,29 +114,36 @@ programs=(
 "libmtp"
 "cmus"
 "xreader"
+"firefox"
 #"network-manager-applet"
 )
 
 deps_programs=(
-# i3-gaps
+## i3-gaps
 "i3lock"
 "perl-anyevent-i3"
 "perl-json-xs"
-# lightdm
+
+## lightdm
 "gtk-engine-murrine"
 "noto-fonts"
 "ttf-roboto"
-# noto-fonts and ttf-roboto deps
+
+## noto-fonts and ttf-roboto deps
 "noto-fonts-cjk"
 "noto-fonts-emoji"
 "noto-fonts-extra"
-# neovim
+
+## neovim
 "python2-neovim"
 "python-neovim"
 "xclip"
 "xsel"
-# pandoc
-# TODO
+
+## pandoc
+#"pandoc-citeproc"
+#"pandoc-crossref"
+"texlive-core"
 )
 
 sudo_commands_programs=(
@@ -143,11 +153,14 @@ sudo_commands_programs=(
 others=(
 "xf86-input-synaptcs" # touchpad driver
 "network-manager-applet" # graphy network manager
-# Bluetooth
+"wget" # web downloads
+
+## Bluetooth
 "bluez"
 "blueman"
 "bluez-utils"
-# Printer
+
+## Printer
 "ghostscript"
 "cups"
 "gsfonts"
@@ -187,13 +200,11 @@ commands_aur=(
 # EXECS #
 
 ## EXEC AS ROOT
-# Timeout in 100min for not require sudo passwd in aur install
-# TODO: Implement regex to avoid multiple multilibs
-sudo -E bash <<EOF
-echo '[multilib]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
-pacman -Syu
-EOF
+if ! grep -Fxq "[multilib]" /etc/pacman.conf; then
+	sudo echo '[multilib]' >> /etc/pacman.conf
+	sudo echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+	sudo pacman -Syu
+fi
 
 install_pac ${basePrograms[*]}
 install_pac ${amdVideo[*]} ## CHANGE IT IF HAVE ANOTHER GPU!!!

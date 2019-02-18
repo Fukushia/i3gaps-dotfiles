@@ -192,5 +192,5 @@ for_window [window_type="menu"] floating enable
 exec_always --no-startup-id compton 
 exec_always ~/.config/polybar/polybar.sh
 exec_always --no-startup-id nm-applet
-exec_always ~/.config/i3/feh-slides.sh
-#exec_always ~/.config/i3/mpv.sh "--ao=null --loop-file=inf /home/vinicius/animated_wallpapers/fate-wallpaper.mp4"
+#exec_always ~/.config/i3/feh-slides.sh
+exec_always ~/.config/i3/mpv.sh "--ao=null --loop-file=inf $HOME/wallpapers/videos/fliperama"

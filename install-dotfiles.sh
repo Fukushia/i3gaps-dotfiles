@@ -4,7 +4,10 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 home_files=(
   "bash_profile"
+  "inputrc"
   "Xresources"
+  "fzf.bash"
+  "fzf.zsh"
 )
 
 lightdm=(
