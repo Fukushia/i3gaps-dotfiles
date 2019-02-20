@@ -115,6 +115,7 @@ programs=(
 "cmus"
 "xreader"
 "firefox"
+"wget" # web downloads
 #"network-manager-applet"
 )
 
@@ -153,7 +154,7 @@ sudo_commands_programs=(
 others=(
 "xf86-input-synaptcs" # touchpad driver
 "network-manager-applet" # graphy network manager
-"wget" # web downloads
+"acpilight" # brightness for laptops
 
 ## Bluetooth
 "bluez"
@@ -178,6 +179,7 @@ sudo_commands_others=(
 "systemctl enable org.cups.cupsd.service" "systemctl start org.cups.cupsd.service"
 "systemctl enable ufw.service" "systemctl start ufw.service"
 "mkinitcpio -p linux-lts" "grub-mkconfig -o /boot/grub/grub.cfg"
+"chmod 666 /sys/class/backlight/*/brightness"
 )
 
 aur=(
