@@ -116,6 +116,7 @@ programs=(
 "xreader"
 "firefox"
 "wget" # web downloads
+"tree"
 #"network-manager-applet"
 )
 

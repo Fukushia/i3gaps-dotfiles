@@ -33,6 +33,9 @@ alias cd.='cd $(readlink -f .)'    # Go to real dir (i.e. if current dir is link
 
 alias tree1="tree -d -L 1"
 alias tree2="tree -d -L 2"
+alias tree3="tree -d -L 3"
+alias tree4="tree -d -L 4"
+alias tree5="tree -d -L 5"
 
 # Network
 
