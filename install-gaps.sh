@@ -147,6 +147,21 @@ deps_programs=(
 "texlive-core"
 )
 
+dev_programs=(
+## Flutter deps
+"gradle"
+"android-tools"
+
+## Android dev
+"android-udev"
+"jdk-openjdk"
+
+## Android studio
+"kdialog"
+"zenity"
+"xorg-xmessage"
+)
+
 sudo_commands_programs=(
 "systemctl enable lightdm"
 )
@@ -212,6 +227,7 @@ install_pac ${basePrograms[*]}
 install_pac ${amdVideo[*]} ## CHANGE IT IF HAVE ANOTHER GPU!!!
 install_pac ${programs[*]}
 install_opt ${deps_programs[*]}
+install_pac ${dev_programs[*]}
 sudo_exec_command "${sudo_commands_programs[@]}"
 
 ## (CHANGE IT) FULL OPTIONALS

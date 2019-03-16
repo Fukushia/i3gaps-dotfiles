@@ -19,10 +19,11 @@ alias paths='echo -e ${PATH//:/\\n}'
 
 # Directory listing/traversal
 
-alias l="ls -lahA --time-style=long-iso --group-directories-first"
+alias l="ls -A --group-directories-first"
+alias ll="ls -lahA --time-style=long-iso --group-directories-first"
 alias lt="ls -lhAtr --time-style=long-iso --group-directories-first"
 alias ld="ls -ld */"
-alias lpm="stat -c '%a %n' *"
+alias lm="stat -c '%a %n' *"
 
 alias ..="cd .."
 alias ...="cd ../.."
