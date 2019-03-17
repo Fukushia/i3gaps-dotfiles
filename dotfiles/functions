@@ -13,6 +13,7 @@ v() {
 }
 
 yt() {
+  # buffering next videos in playlist is in work on the mpv issues
   if [[ $# -eq 2 ]]; then
     $HOME/.config/i3/mpv.sh "--ytdl-format=mp4 --playlist-start=$2 $1"
   else

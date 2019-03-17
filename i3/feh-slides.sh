@@ -1,11 +1,14 @@
 #!/bin/bash
+SCRIPT=$(readlink -f "$0")
 
-if ps -Al | grep animatedWallpaper; then
-  pkill -f animatedWallpaper &
-  wait
+pkill -f animatedWallpaper & wait
+
+if [[ `ps -Al | grep -c feh-slides.sh` -gt 2 ]]; then
+  exit
 fi
 
-while true; do 
-  feh --recursive --randomize --bg-fill ~/wallpapers/images
-  sleep 5
-done
+feh --recursive --randomize --bg-fill ~/wallpapers/images
+sleep 5
+exec "$SCRIPT"
+
+
