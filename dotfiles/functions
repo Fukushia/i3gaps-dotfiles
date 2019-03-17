@@ -13,5 +13,5 @@ v() {
 }
 
 yt() {
-  exec ~/.config/wallpapers/mpv.sh '-f mp4 $@' 
+  exec ~/.config/i3/mpv.sh '-f mp4 $@' 
 }
