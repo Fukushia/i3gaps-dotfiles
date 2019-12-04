@@ -34,23 +34,34 @@ partprobe "$devBase"
 # 8200 -> Linux swap
 # 8302 -> Linux /home
 
-sgdisk -o "$devBase"
-sgdisk --new=1:0:+550M --typecode=1:ef02 "$devBase"
-sgdisk --new=2:0:+32G --typecode=2:8305 "$devBase"
-sgdisk --new=3:0:+12G --typecode=3:8200 "$devBase"
-sgdisk --new=4:0:+80G --typecode=4:8302 "$devBase"
+# OLD
+#sgdisk -o "$devBase"
+#sgdisk --new=1:0:+550M --typecode=1:ef02 "$devBase"
+#sgdisk --new=2:0:+32G --typecode=2:8304 "$devBase"
+#sgdisk --new=3:0:+12G --typecode=3:8200 "$devBase"
+#sgdisk --new=4:0:100% --typecode=4:8302 "$devBase"
+
+parted "$devBase" --script -- mklabel gpt
+parted "$devBase" --script -- mkpart ESP fat32 '0%' 512MiB
+parted "$devBase" --script -- name 1 boot
+parted "$devBase" --script -- set 1 boot on
+
+parted "$devBase" --script -- mkpart primary linux-swap -8GiB '100%'
+parted "$devBase" --script -- name 2 swap
+parted "$devBase" --script -- set 2 swap on
+parted "$devBase" --script -- set 2 hidden on
+
+parted "$devBase" --script -- mkpart primary 512MiB -8GiB
+parted "$devBase" --script -- name 3 root
 
 mkfs.vfat "$devBase"1
-mkfs.ext4 "$devBase"2
-mkswap "$devBase"3
-swapon "$devBase"3
-mkfs.ext4 "$devBase"4
+mkswap "$devBase"2
+swapon "$devBase"2
+mkfs.ext4 "$devBase"3
 
-mount "$devBase"2 /mnt
+mount "$devBase"3 /mnt
 mkdir -p /mnt/boot
 mount "$devBase"1 /mnt/boot
-mkdir -p /mnt/home
-mount "$devBase"4 /mnt/home
 
 pacstrap /mnt base base-devel
 
@@ -73,7 +84,9 @@ posChroot() {
   mkinitcpio -p linux
 
   # Se usar processador intel:
-  # pacman --noconfirm -S intel-ucode
+  if [[ 0 -lt `lspci | grep -c Intel` ]]; then
+    pacman --noconfirm -S intel-ucode
+  fi
   pacman --noconfirm -S grub efibootmgr # necessario para o funcionamento do grub
   grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch_grub
   grub-mkconfig -o /boot/grub/grub.cfg
